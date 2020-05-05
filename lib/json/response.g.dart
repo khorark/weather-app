@@ -80,7 +80,7 @@ Map<String, dynamic> _$CoordToJson(Coord instance) => <String, dynamic>{
 Main _$MainFromJson(Map<String, dynamic> json) {
   return Main(
     (json['temp'] as num)?.toDouble(),
-    json['pressure'] as int,
+    (json['pressure'] as num)?.toDouble(),
     json['humidity'] as int,
     (json['temp_min'] as num)?.toDouble(),
     (json['temp_max'] as num)?.toDouble(),

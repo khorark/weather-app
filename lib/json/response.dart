@@ -31,8 +31,13 @@ class City {
   final Coord coord;
   final Main main;
   final int dt;
+
+  @JsonKey(nullable: true)
   final Wind wind;
+
+  @JsonKey(nullable: true)
   final Rain rain;
+
   final Clouds clouds;
   final List<Weather> weather;
 
@@ -62,7 +67,7 @@ class Coord {
 @JsonSerializable()
 class Main {
   final double temp;
-  final int pressure;
+  final double pressure;
   final int humidity;
   @JsonKey(name: 'temp_min')
   final double tempMin;
@@ -86,6 +91,8 @@ class Main {
 class Wind {
   final double spend;
   final int deg;
+
+  @JsonKey(nullable: true)
   final double gust;
 
   Wind(
