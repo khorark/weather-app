@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'response.g.dart';
 
 @JsonSerializable()
-class BaseResponse extends Object {
+class BaseResponse {
   final String message;
   final String cod;
   final int count;
@@ -25,7 +25,7 @@ class BaseResponse extends Object {
 }
 
 @JsonSerializable()
-class City extends Object {
+class City {
   final int id;
   final String name;
   final Coord coord;
@@ -45,8 +45,14 @@ class City extends Object {
 }
 
 @JsonSerializable()
-class Coord extends Object {
-  Coord();
+class Coord {
+  final double lat;
+  final double lon;
+
+  Coord(
+    this.lat,
+    this.lon,
+  );
 
   factory Coord.fromJson(Map<String, dynamic> json) => _$CoordFromJson(json);
 
@@ -54,8 +60,22 @@ class Coord extends Object {
 }
 
 @JsonSerializable()
-class Main extends Object {
-  Main();
+class Main {
+  final double temp;
+  final int pressure;
+  final int humidity;
+  @JsonKey(name: 'temp_min')
+  final double tempMin;
+  @JsonKey(name: 'temp_max')
+  final double tempmax;
+
+  Main(
+    this.temp,
+    this.pressure,
+    this.humidity,
+    this.tempMin,
+    this.tempmax,
+  );
 
   factory Main.fromJson(Map<String, dynamic> json) => _$MainFromJson(json);
 
@@ -63,8 +83,16 @@ class Main extends Object {
 }
 
 @JsonSerializable()
-class Wind extends Object {
-  Wind();
+class Wind {
+  final double spend;
+  final int deg;
+  final double gust;
+
+  Wind(
+    this.spend,
+    this.deg,
+    this.gust,
+  );
 
   factory Wind.fromJson(Map<String, dynamic> json) => _$WindFromJson(json);
 
@@ -72,8 +100,10 @@ class Wind extends Object {
 }
 
 @JsonSerializable()
-class Rain extends Object {
-  Rain();
+class Rain {
+  @JsonKey(name: '3h')
+  final double threeHour;
+  Rain(this.threeHour);
 
   factory Rain.fromJson(Map<String, dynamic> json) => _$RainFromJson(json);
 
@@ -82,7 +112,11 @@ class Rain extends Object {
 
 @JsonSerializable()
 class Clouds extends Object {
-  Clouds();
+  final int all;
+
+  Clouds(
+    this.all,
+  );
 
   factory Clouds.fromJson(Map<String, dynamic> json) => _$CloudsFromJson(json);
 
@@ -90,8 +124,18 @@ class Clouds extends Object {
 }
 
 @JsonSerializable()
-class Weather extends Object {
-  Weather();
+class Weather {
+  final int id;
+  final String main;
+  final String description;
+  final String icon;
+
+  Weather(
+    this.id,
+    this.main,
+    this.description,
+    this.icon,
+  );
 
   factory Weather.fromJson(Map<String, dynamic> json) =>
       _$WeatherFromJson(json);

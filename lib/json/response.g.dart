@@ -66,37 +66,81 @@ Map<String, dynamic> _$CityToJson(City instance) => <String, dynamic>{
     };
 
 Coord _$CoordFromJson(Map<String, dynamic> json) {
-  return Coord();
+  return Coord(
+    (json['lat'] as num)?.toDouble(),
+    (json['lon'] as num)?.toDouble(),
+  );
 }
 
-Map<String, dynamic> _$CoordToJson(Coord instance) => <String, dynamic>{};
+Map<String, dynamic> _$CoordToJson(Coord instance) => <String, dynamic>{
+      'lat': instance.lat,
+      'lon': instance.lon,
+    };
 
 Main _$MainFromJson(Map<String, dynamic> json) {
-  return Main();
+  return Main(
+    (json['temp'] as num)?.toDouble(),
+    json['pressure'] as int,
+    json['humidity'] as int,
+    (json['temp_min'] as num)?.toDouble(),
+    (json['temp_max'] as num)?.toDouble(),
+  );
 }
 
-Map<String, dynamic> _$MainToJson(Main instance) => <String, dynamic>{};
+Map<String, dynamic> _$MainToJson(Main instance) => <String, dynamic>{
+      'temp': instance.temp,
+      'pressure': instance.pressure,
+      'humidity': instance.humidity,
+      'temp_min': instance.tempMin,
+      'temp_max': instance.tempmax,
+    };
 
 Wind _$WindFromJson(Map<String, dynamic> json) {
-  return Wind();
+  return Wind(
+    (json['spend'] as num)?.toDouble(),
+    json['deg'] as int,
+    (json['gust'] as num)?.toDouble(),
+  );
 }
 
-Map<String, dynamic> _$WindToJson(Wind instance) => <String, dynamic>{};
+Map<String, dynamic> _$WindToJson(Wind instance) => <String, dynamic>{
+      'spend': instance.spend,
+      'deg': instance.deg,
+      'gust': instance.gust,
+    };
 
 Rain _$RainFromJson(Map<String, dynamic> json) {
-  return Rain();
+  return Rain(
+    (json['3h'] as num)?.toDouble(),
+  );
 }
 
-Map<String, dynamic> _$RainToJson(Rain instance) => <String, dynamic>{};
+Map<String, dynamic> _$RainToJson(Rain instance) => <String, dynamic>{
+      '3h': instance.threeHour,
+    };
 
 Clouds _$CloudsFromJson(Map<String, dynamic> json) {
-  return Clouds();
+  return Clouds(
+    json['all'] as int,
+  );
 }
 
-Map<String, dynamic> _$CloudsToJson(Clouds instance) => <String, dynamic>{};
+Map<String, dynamic> _$CloudsToJson(Clouds instance) => <String, dynamic>{
+      'all': instance.all,
+    };
 
 Weather _$WeatherFromJson(Map<String, dynamic> json) {
-  return Weather();
+  return Weather(
+    json['id'] as int,
+    json['main'] as String,
+    json['description'] as String,
+    json['icon'] as String,
+  );
 }
 
-Map<String, dynamic> _$WeatherToJson(Weather instance) => <String, dynamic>{};
+Map<String, dynamic> _$WeatherToJson(Weather instance) => <String, dynamic>{
+      'id': instance.id,
+      'main': instance.main,
+      'description': instance.description,
+      'icon': instance.icon,
+    };
