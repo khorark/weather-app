@@ -7,6 +7,7 @@ class WeatherModel {
   final double rain;
   final double lat;
   final double long;
+  final String icon;
 
   WeatherModel({
     this.city,
@@ -15,12 +16,15 @@ class WeatherModel {
     this.rain,
     this.lat,
     this.long,
+    this.icon,
   });
 
   WeatherModel.fromResponse(City response)
       : city = response.name,
-        temperature = response.main.temp,
-        description = response.weather[0].description,
+        // Because api return Kelvin
+        temperature = response.main.temp - 273.15,
+        description = response.weather[0]?.description,
+        icon = response.weather[0]?.icon,
         rain = response.rain.threeHour,
         lat = response.coord.lat,
         long = response.coord.lon;
