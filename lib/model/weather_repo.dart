@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:geolocation/geolocation.dart';
 
 import 'package:weather/json/response.dart';
 
@@ -12,7 +11,9 @@ import 'package:weather/const.dart';
 
 class WeatherRepo {
   final http.Client client;
-  final String url = 'http://api.openweathermap.org/data/2.5/find?';
+  final String url = 'https://api.openweathermap.org/data/2.5/find?';
+  final Geolocator geolocator = Geolocator()
+    ..forceAndroidLocationManager = true;
 
   WeatherRepo({
     this.client,
@@ -24,42 +25,46 @@ class WeatherRepo {
     cnt = count;
   }
 
-  Future<List<WeatherModel>> updateWeather(LocationResult result) async {
+  Future<List<WeatherModel>> updateWeather(Position result) async {
     double lat;
     double long;
 
     if (result != null) {
-      lat = result.location.latitude;
-      long = result.location.longitude;
+      lat = result.latitude;
+      long = result.longitude;
     } else {
       lat = 43;
       long = 79;
     }
 
-    String url = this.url + 'lat$lat&lon=$long&cnt=$cnt&appid=$API_KEY';
+    String url = this.url + 'lat=$lat&lon=$long&cnt=$cnt&appid=$API_KEY';
 
-    final response = await client.get(url);
+    try {
+      final response = await client.get(url);
+      List<WeatherModel> req = BaseResponse.fromJson(json.decode(response.body))
+          .cities
+          .map((city) => WeatherModel.fromResponse(city))
+          .toList();
 
-    List<WeatherModel> req = BaseResponse.fromJson(json.decode(response.body))
-        .cities
-        .map((city) => WeatherModel.fromResponse(city))
-        .toList();
-
-    return req;
+      return req;
+    } catch (e) {
+      return null;
+    }
   }
 
-  Future<LocationResult> updateLocation() async {
-    Future<LocationResult> result = Geolocation.lastKnownLocation();
+  Future<Position> updateLocation() async {
+    Future<Position> result = geolocator.getCurrentPosition();
     return result;
   }
 
   Future<bool> getGps() async {
-    final GeolocationResult result = await Geolocation.isLocationOperational();
+    final GeolocationStatus result =
+        await geolocator.checkGeolocationPermissionStatus();
 
-    if (result.isSuccessful) {
-      return true;
-    } else {
+    if (result.value.toString() == GeolocationStatus.granted.toString()) {
       return false;
+    } else {
+      return true;
     }
   }
 }

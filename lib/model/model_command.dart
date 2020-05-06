@@ -1,5 +1,5 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:rx_command/rx_command.dart';
-import 'package:geolocation/geolocation.dart';
 
 import 'package:weather/model/model.dart';
 import 'package:weather/model/weather_repo.dart';
@@ -7,10 +7,11 @@ import 'package:weather/model/weather_repo.dart';
 class ModelCommand {
   final WeatherRepo weatherRepo;
 
-  final RxCommand<Null, LocationResult> updateLocationCommand;
-  final RxCommand<LocationResult, List<WeatherModel>> updateWeatherCommand;
-  final RxCommand<Null, bool> getGpsCommand;
+  final RxCommand<dynamic, Position> updateLocationCommand;
+  final RxCommand<Position, List<WeatherModel>> updateWeatherCommand;
+  final RxCommand<void, bool> getGpsCommand;
   final RxCommand<bool, bool> radioCheckedCommand;
+  final RxCommand<int, void> addCitiesCommand;
 
   ModelCommand._(
     this.weatherRepo,
@@ -18,6 +19,7 @@ class ModelCommand {
     this.updateWeatherCommand,
     this.getGpsCommand,
     this.radioCheckedCommand,
+    this.addCitiesCommand,
   );
 
   factory ModelCommand(WeatherRepo repo) {
@@ -25,14 +27,15 @@ class ModelCommand {
 
     final _radioCheckedCommand = RxCommand.createSync<bool, bool>((b) => b);
 
-    final _updateLocationCommand = RxCommand.createAsyncNoParam<LocationResult>(
+    final _updateLocationCommand = RxCommand.createAsyncNoParam<Position>(
         repo.updateLocation,
         canExecute: _getGpsCommand);
 
     final _updateWeatherCommand =
-        RxCommand.createAsync<LocationResult, List<WeatherModel>>(
-            repo.updateWeather,
+        RxCommand.createAsync<Position, List<WeatherModel>>(repo.updateWeather,
             canExecute: _radioCheckedCommand);
+
+    final _addCitiesCommand = RxCommand.createSyncNoResult<int>(repo.addCities);
 
     _updateLocationCommand.listen((data) => _updateWeatherCommand(data));
 
@@ -44,6 +47,7 @@ class ModelCommand {
       _updateWeatherCommand,
       _getGpsCommand,
       _radioCheckedCommand,
+      _addCitiesCommand,
     );
   }
 }

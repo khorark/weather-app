@@ -25,7 +25,7 @@ class WeatherModel {
         temperature = response.main.temp - 273.15,
         description = response.weather[0]?.description,
         icon = response.weather[0]?.icon,
-        rain = response.rain.threeHour,
+        rain = response.rain?.threeHour,
         lat = response.coord.lat,
         long = response.coord.lon;
 }
