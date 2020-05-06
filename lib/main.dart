@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Text('Get the Weather'),
                               onPressed: ModelProvider.of(context)
                                   .updateLocationCommand
-                                  .execute),
+                                  .call),
                           onFalse: MaterialButton(
                               elevation: 0.0,
                               color: Colors.blueGrey,

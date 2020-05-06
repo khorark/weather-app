@@ -63,9 +63,9 @@ class WeatherRepo {
         await geolocator.checkGeolocationPermissionStatus();
 
     if (result == GeolocationStatus.granted) {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   }
 }
