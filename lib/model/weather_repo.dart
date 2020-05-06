@@ -53,7 +53,8 @@ class WeatherRepo {
   }
 
   Future<Position> updateLocation() async {
-    Future<Position> result = geolocator.getCurrentPosition();
+    Future<Position> result =
+        geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
     return result;
   }
 
