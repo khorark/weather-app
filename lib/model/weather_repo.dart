@@ -62,7 +62,7 @@ class WeatherRepo {
     final GeolocationStatus result =
         await geolocator.checkGeolocationPermissionStatus();
 
-    if (result.value.toString() == GeolocationStatus.granted.toString()) {
+    if (result == GeolocationStatus.granted) {
       return false;
     } else {
       return true;
