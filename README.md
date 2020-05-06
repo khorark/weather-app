@@ -1,16 +1,21 @@
-# weather
+# Flutter Weather
 
-A new Flutter project.
+Simple flutter app for show weather by geolocation.
+
+<img src="https://raw.githubusercontent.com/khorark/weather-app/master/demo.gif" width="400">
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. You need get Api key from https://openweathermap.org
 
-A few resources to get you started if this is your first Flutter project:
+2. Created file ```lib/const.dart```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+3. Input your key in this file 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```const String API_KEY = 'You api key';```
+
+4. Run project this command
+
+```
+flutter run
+```
