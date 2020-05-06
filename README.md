@@ -19,3 +19,5 @@ Simple flutter app for show weather by geolocation.
 ```
 flutter run
 ```
+
+## Licence MIT.
